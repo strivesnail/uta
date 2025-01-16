@@ -6,7 +6,7 @@
 #include <omp.h>
 
 #define VECTOR_SIZE 32
-#define ARRAY_SIZE 100 
+#define ARRAY_SIZE 100000 
 
 void populate_array(uint16_t array[ARRAY_SIZE][VECTOR_SIZE]) {
     srand(time(NULL));
@@ -25,7 +25,7 @@ void avx512_test(uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t target_key) {
         __mmask32 mask = _mm512_cmpeq_epi16_mask(vec, target_vec);
 
         if (mask) {
-            printf("Match found in vector %d\n", i);
+           // printf("Match found in vector %d\n", i);
         }
     }
 }
@@ -34,7 +34,7 @@ void key_to_key_test(uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t target_ke
     for (int i = 0; i < ARRAY_SIZE; i++) {
         for (int j = 0; j < VECTOR_SIZE; j++) {
             if (array[i][j] == target_key) {
-                printf("Match found in vector %d, key %d\n", i, j);
+              //  printf("Match found in vector %d, key %d\n", i, j);
             }
         }
     }
@@ -43,7 +43,7 @@ void key_to_key_test(uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t target_ke
 void single_key_test(uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t target_key) {
     for (int i = 0; i < ARRAY_SIZE; i++) {
         if (array[i][0] == target_key) {
-            printf("Match found in vector %d, first key\n", i);
+           // printf("Match found in vector %d, first key\n", i);
         }
     }
 }
@@ -64,7 +64,7 @@ void avx512_openmp_test(uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t target
             #pragma omp critical
             {
                 match_found = 1;
-                printf("Match found in vector %d\n", i);
+                //printf("Match found in vector %d\n", i);
             }
         }
     }

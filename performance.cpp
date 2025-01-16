@@ -5,7 +5,7 @@
 #include <immintrin.h>
 
 #define VECTOR_SIZE 32      // 每个向量包含 32 个键
-#define ARRAY_SIZE 1000000   // 数组中有 100,000 个向量
+#define ARRAY_SIZE 10000   // 数组中有 100,00 个向量
 #define NUM_RUNS 50          // 每种场景运行的次数
 
 // 随机填充数组

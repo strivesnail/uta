@@ -6,6 +6,7 @@
 
 #define VECTOR_SIZE 32 
 #define ARRAY_SIZE 100000 
+#define NUM_RUNS 5
 
 void populate_array(uint16_t array[ARRAY_SIZE][VECTOR_SIZE]) {
     srand(time(NULL));
@@ -47,13 +48,23 @@ void single_key_test(uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t target_ke
     }
 }
 
-void measure_time(void (*test_func)(uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t), uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t target_key, const char* test_name) {
-    clock_t start_time = clock();
-    test_func(array, target_key);
-    clock_t end_time = clock();
+double measure_time(void (*test_func)(uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t), uint16_t array[ARRAY_SIZE][VECTOR_SIZE], uint16_t target_key, const char* test_name) {
+    double total_time = 0.0;
 
-    double time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
-    printf("%s: Time taken: %f seconds\n", test_name, time_taken);
+    for (int run = 0; run < NUM_RUNS; run++) {
+        clock_t start_time = clock();
+        test_func(array, target_key);
+        clock_t end_time = clock();
+
+        double time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
+        total_time += time_taken;
+
+        printf("%s - Run %d: Time taken: %f seconds\n", test_name, run + 1, time_taken);
+    }
+
+    double average_time = total_time / NUM_RUNS;
+    printf("%s: Average time: %f seconds over %d runs\n\n", test_name, average_time, NUM_RUNS);
+    return average_time;
 }
 
 int main() {

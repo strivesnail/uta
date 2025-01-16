@@ -84,7 +84,7 @@ double measure_time(void (*test_func)(uint16_t array[ARRAY_SIZE][VECTOR_SIZE], u
         double time_taken = ((double)(end_time - start_time)) / CLOCKS_PER_SEC;
         total_time += time_taken;
 
-        printf("%s - Run %d: Time taken: %f seconds\n", test_name, run + 1, time_taken);
+        //printf("%s - Run %d: Time taken: %f seconds\n", test_name, run + 1, time_taken);
     }
 
     double average_time = total_time / NUM_RUNS;
